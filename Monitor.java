@@ -4,6 +4,8 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.JButton;
@@ -12,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Monitor implements WindowListener, ActionListener {
+public class Monitor implements WindowListener, ActionListener, KeyListener {
     private final JFrame minhaTela;
     private boolean sinal;
     private final JButton botaoIniciar;
@@ -35,6 +37,11 @@ public class Monitor implements WindowListener, ActionListener {
 
         this.minhaTela = new JFrame("Desenvolvimento de Jogos Digitais");
         this.minhaTela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.minhaTela.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.minhaTela.addWindowListener(this);
+        this.minhaTela.addKeyListener(this);
+        this.minhaTela.setFocusable(true);
+        this.sinal = false;
 
         this.painelPlacar = new JPanel();
         JPanel painelJogo = new JPanel() {
@@ -72,6 +79,7 @@ public class Monitor implements WindowListener, ActionListener {
         container.add(painelBotoes, BorderLayout.SOUTH);
         this.minhaTela.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.minhaTela.addWindowListener(this);
+        this.minhaTela.addKeyListener(this);
         this.sinal = false;
     }
 
@@ -128,6 +136,24 @@ public class Monitor implements WindowListener, ActionListener {
             this.pontuacaoJogador1 = 0;
             this.labelPontuacaoJogador1.setText("" + this.pontuacaoJogador1);
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_W) {
+            paletaJogador1.mover(Paleta.PARA_CIMA);
+        } else if (keyCode == KeyEvent.VK_S) {
+            paletaJogador1.mover(Paleta.PARA_BAIXO);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 
     @Override
