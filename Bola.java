@@ -1,16 +1,46 @@
-public class Bola {
-    private int x;
-    private int y;
-    private int diametro;
+import java.awt.*;
+import java.util.*;
 
-    public Bola(int x, int y, int diametro, int par3, int par4) {
-        this.x = x;
-        this.y = y;
-        this.diametro = diametro;
-    }
+public class Bola extends Rectangle{
 
-    public void desenhar(java.awt.Graphics g) {
-        g.setColor(java.awt.Color.WHITE);
-        g.fillOval(x, y, diametro, diametro);
-    }
+	Random random;
+	int xVelocity;
+	int yVelocity;
+	int initialSpeed = 2;
+	Color color;
+	
+	Bola(int x, int y, int width, int height){
+		super(x,y,width,height);
+		random = new Random();
+		int randomXDirection = random.nextInt(2);
+		if(randomXDirection == 0)
+			randomXDirection--;
+		setXDirection(randomXDirection*initialSpeed);
+		
+		int randomYDirection = random.nextInt(2);
+		if(randomYDirection == 0)
+			randomYDirection--;
+		setYDirection(randomYDirection*initialSpeed);
+		
+	}
+	
+	public void setXDirection(int randomXDirection) {
+		xVelocity = randomXDirection;
+	}
+	public void setYDirection(int randomYDirection) {
+		yVelocity = randomYDirection;
+	}
+	public void move() {
+		x += xVelocity;
+		y += yVelocity;
+	}
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fillOval(x, y, height, width);
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
 }
